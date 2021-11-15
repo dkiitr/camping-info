@@ -7,7 +7,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express')
 const app = express();
-const port = 3000;
 const path = require('path');
 const ejsMate = require('ejs-mate')
 const session = require('express-session');
@@ -29,16 +28,18 @@ const reviewRoutes = require("./routes/reviews");
 
 
 
-const dbUrl = process.env.DB_URL ||  'mongodb://localhost:27017/yelp-camp';
+const dbUrl = process.env.DB_URL;
 
-mongoose.connect(dbUrl)    
-    .then(() => {
-        console.log("MONGO DATABASE CONNECTED!!")
-    })
-    .catch(err => {
-        console.log("MONGO CONNECTION ERROR!!")
-        console.log(err)
-    })
+mongoose.connect(dbUrl, {
+    useUnifiedTopology: true,
+    
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected");
+})
 
 
 
