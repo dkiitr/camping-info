@@ -28,7 +28,7 @@ const reviewRoutes = require("./routes/reviews");
 
 
 
-const dbUrl = process.env.DB_URL;
+const dbUrl = process.env.DB_URL ;
 
 mongoose.connect(dbUrl, {
     useUnifiedTopology: true,
